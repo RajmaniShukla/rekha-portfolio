@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-blush text-brand-navy font-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-brand-rose text-white;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-blush;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-rose rounded-full;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-brand-rose text-white font-accent font-semibold rounded-full
+           hover:bg-brand-navy transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 border-2 border-brand-rose text-brand-rose font-accent font-semibold
+           rounded-full hover:bg-brand-rose hover:text-white transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-brand-gold text-brand-navy font-accent font-bold rounded-full
+           hover:bg-yellow-400 transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+
+  .section-padding {
+    @apply px-4 py-16 md:px-8 md:py-24 lg:px-16;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .gold-line {
+    @apply h-1 w-16 bg-brand-gold rounded-full;
+  }
+
+  .section-tag {
+    @apply inline-flex items-center gap-2 text-brand-rose font-accent font-semibold text-sm uppercase tracking-widest;
+  }
+}
