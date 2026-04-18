@@ -2,67 +2,33 @@
 
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import { TrendingUp, Megaphone, Users, ArrowRight, CheckCircle2 } from "lucide-react";
+import { TrendingUp, Megaphone, Users, ArrowRight, CheckCircle2, Briefcase } from "lucide-react";
 import Link from "next/link";
 
-const services = [
-  {
-    icon: TrendingUp,
-    title: "Sales & Business Development",
-    tagline: "Build pipelines that convert.",
-    description:
-      "From strategy to execution, I help businesses develop robust sales processes, identify high-value leads, and close more deals.",
-    features: [
-      "Sales strategy & go-to-market planning",
-      "Lead generation & pipeline building",
-      "B2B and B2C sales consulting",
-      "Sales team hiring & training",
-      "CRM setup & optimization",
-      "Revenue growth roadmaps",
-    ],
-    color: "bg-brand-rose",
-    light: "bg-brand-rose/5",
-    border: "border-brand-rose/20",
-  },
-  {
-    icon: Megaphone,
-    title: "Influencer Marketing",
-    tagline: "Amplify your brand authentically.",
-    description:
-      "Leverage my personal audience and influencer network to grow brand awareness, drive engagement, and convert followers into customers.",
-    features: [
-      "Brand collaboration campaigns",
-      "Content strategy & planning",
-      "Audience targeting & reach analysis",
-      "Sponsored content creation",
-      "Multi-platform campaign management",
-      "Performance tracking & reporting",
-    ],
-    color: "bg-brand-gold",
-    light: "bg-brand-gold/5",
-    border: "border-brand-gold/20",
-  },
-  {
-    icon: Users,
-    title: "Business Consulting",
-    tagline: "Strategy that actually works.",
-    description:
-      "Project-based consulting for startups and SMEs looking to enter new markets, optimize operations, or build high-performing teams.",
-    features: [
-      "Market research & competitive analysis",
-      "Business development strategy",
-      "Operational efficiency consulting",
-      "Team structure & management",
-      "Client relationship management",
-      "Growth hacking for startups",
-    ],
-    color: "bg-brand-navy",
-    light: "bg-brand-navy/5",
-    border: "border-brand-navy/20",
-  },
+type Service = {
+  _id: string;
+  title: string;
+  tagline?: string;
+  description?: string;
+  features?: string[];
+  icon?: string;
+  order?: number;
+};
+
+type Props = { services: Service[] };
+
+const iconMap: Record<string, React.ElementType> = {
+  TrendingUp, Megaphone, Users, Briefcase, ArrowRight,
+};
+
+const stylesByIndex = [
+  { color: "bg-brand-rose", light: "bg-brand-rose/5", border: "border-brand-rose/20" },
+  { color: "bg-brand-gold", light: "bg-brand-gold/5", border: "border-brand-gold/20" },
+  { color: "bg-brand-navy", light: "bg-brand-navy/5", border: "border-brand-navy/20" },
+  { color: "bg-brand-coral", light: "bg-brand-coral/5", border: "border-brand-coral/20" },
 ];
 
-export default function ServicesContent() {
+export default function ServicesContent({ services }: Props) {
   return (
     <main className="pt-20">
       {/* Hero */}
@@ -86,40 +52,52 @@ export default function ServicesContent() {
       {/* Services */}
       <section className="section-padding bg-brand-blush">
         <div className="container-wide space-y-8">
-          {services.map((s) => (
-            <motion.div
-              key={s.title}
-              variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-              className={`${s.light} border ${s.border} rounded-3xl p-8 md:p-12`}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-                <div className="space-y-6">
-                  <div className={`${s.color} w-14 h-14 rounded-2xl flex items-center justify-center`}>
-                    <s.icon size={24} className="text-white" />
+          {services.length === 0 ? (
+            <p className="text-center text-brand-navy/40 font-accent py-20">
+              No services yet — add them in the Studio!
+            </p>
+          ) : (
+            services.map((s, i) => {
+              const style = stylesByIndex[i % stylesByIndex.length];
+              const IconComp = (s.icon && iconMap[s.icon]) ? iconMap[s.icon] : Briefcase;
+              return (
+                <motion.div
+                  key={s._id}
+                  variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+                  className={`${style.light} border ${style.border} rounded-3xl p-8 md:p-12`}
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                    <div className="space-y-6">
+                      <div className={`${style.color} w-14 h-14 rounded-2xl flex items-center justify-center`}>
+                        <IconComp size={24} className="text-white" />
+                      </div>
+                      <div>
+                        <h2 className="font-display text-3xl font-bold text-brand-navy mb-2">{s.title}</h2>
+                        {s.tagline && <p className="font-accent text-brand-rose font-semibold italic">{s.tagline}</p>}
+                      </div>
+                      {s.description && <p className="text-brand-navy/70 leading-relaxed">{s.description}</p>}
+                      <Link href="/contact" className="btn-primary">Let&apos;s Talk <ArrowRight size={16} /></Link>
+                    </div>
+                    {s.features && s.features.length > 0 && (
+                      <div>
+                        <h4 className="font-accent font-semibold text-brand-navy/50 uppercase tracking-widest text-xs mb-4">
+                          What&apos;s Included
+                        </h4>
+                        <ul className="space-y-3">
+                          {s.features.map((f, j) => (
+                            <li key={j} className="flex items-center gap-3 text-brand-navy/70">
+                              <CheckCircle2 size={16} className="text-brand-rose shrink-0" />
+                              <span className="text-sm">{f}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <h2 className="font-display text-3xl font-bold text-brand-navy mb-2">{s.title}</h2>
-                    <p className="font-accent text-brand-rose font-semibold italic">{s.tagline}</p>
-                  </div>
-                  <p className="text-brand-navy/70 leading-relaxed">{s.description}</p>
-                  <Link href="/contact" className="btn-primary">Let&apos;s Talk <ArrowRight size={16} /></Link>
-                </div>
-                <div>
-                  <h4 className="font-accent font-semibold text-brand-navy/50 uppercase tracking-widest text-xs mb-4">
-                    What&apos;s Included
-                  </h4>
-                  <ul className="space-y-3">
-                    {s.features.map((f) => (
-                      <li key={f} className="flex items-center gap-3 text-brand-navy/70">
-                        <CheckCircle2 size={16} className="text-brand-rose shrink-0" />
-                        <span className="text-sm">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                </motion.div>
+              );
+            })
+          )}
         </div>
       </section>
 

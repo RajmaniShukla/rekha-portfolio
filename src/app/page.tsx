@@ -4,7 +4,7 @@ import HomeAboutSnapshot from "@/components/sections/HomeAboutSnapshot";
 import HomeServices from "@/components/sections/HomeServices";
 import HomeTestimonials from "@/components/sections/HomeTestimonials";
 import HomeCTA from "@/components/sections/HomeCTA";
-import { getSiteSettings } from "@/lib/sanity/queries";
+import { getSiteSettings, getTestimonials } from "@/lib/sanity/queries";
 
 export const revalidate = 60;
 
@@ -32,7 +32,10 @@ const personSchema = {
 };
 
 export default async function HomePage() {
-  const settings = await getSiteSettings().catch(() => null);
+  const [settings, testimonials] = await Promise.all([
+    getSiteSettings().catch(() => null),
+    getTestimonials().catch(() => []),
+  ]);
 
   return (
     <>
@@ -44,7 +47,7 @@ export default async function HomePage() {
       <MarqueeStrip />
       <HomeAboutSnapshot />
       <HomeServices />
-      <HomeTestimonials />
+      <HomeTestimonials testimonials={testimonials} />
       <HomeCTA />
     </>
   );
