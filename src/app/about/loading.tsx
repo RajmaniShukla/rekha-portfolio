@@ -1,4 +1,4 @@
-export default function RootLoading() {
+export default function Loading() {
   return (
     <div className="min-h-screen bg-brand-navy flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
