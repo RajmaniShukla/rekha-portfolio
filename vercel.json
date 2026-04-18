@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build && cd studio && npm install && npm run build",
+  "buildCommand": "npm run build && cd studio && npm install --legacy-peer-deps && npm run build",
   "installCommand": "npm install",
   "framework": "nextjs"
 }
