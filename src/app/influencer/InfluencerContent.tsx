@@ -2,16 +2,13 @@
 
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-import { FaInstagram, FaLinkedin, FaYoutube, FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Download, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const platforms = [
-  { icon: FaInstagram, name: "Instagram", handle: "@jyothirekha",       followers: "—", color: "from-pink-500 to-purple-600" },
-  { icon: FaLinkedin,  name: "LinkedIn",  handle: "Jyothi Rekha Sahoo", followers: "—", color: "from-blue-600 to-blue-800"   },
-  { icon: FaYoutube,   name: "YouTube",   handle: "Jyothi Rekha",       followers: "—", color: "from-red-500 to-red-700"     },
-  { icon: FaTwitter,   name: "Twitter/X", handle: "@jyothirekha",       followers: "—", color: "from-sky-400 to-sky-600"     },
-  { icon: FaFacebook,  name: "Facebook",  handle: "Jyothi Rekha",       followers: "—", color: "from-blue-500 to-blue-700"   },
+  { icon: FaInstagram, name: "Instagram", handle: "@firequeen_17",      followers: "—", color: "from-pink-500 to-purple-600", href: "https://www.instagram.com/firequeen_17?igsh=MTV2dzl0dTQ0OTNqbw==" },
+  { icon: FaLinkedin,  name: "LinkedIn",  handle: "Jyothi Rekha Sahoo", followers: "—", color: "from-blue-600 to-blue-800",   href: "https://www.linkedin.com/in/rekha-sahoo-35ab65240"                },
 ];
 
 const niches = [
@@ -63,15 +60,17 @@ export default function InfluencerContent() {
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {platforms.map((p) => (
-              <motion.div key={p.name} variants={fadeInUp}
-                className={`bg-gradient-to-br ${p.color} rounded-3xl p-6 text-white`}>
-                <p.icon size={32} className="mb-4" />
-                <h3 className="font-display text-xl font-bold">{p.name}</h3>
-                <p className="font-accent text-white/70 text-sm mt-1">{p.handle}</p>
-                <div className="mt-4 pt-4 border-t border-white/20">
-                  <span className="font-display text-2xl font-bold">{p.followers}</span>
-                  <span className="font-accent text-white/60 text-xs ml-2 uppercase tracking-wider">Followers</span>
-                </div>
+              <motion.div key={p.name} variants={fadeInUp}>
+                <a href={p.href} target="_blank" rel="noopener noreferrer"
+                  className={`bg-gradient-to-br ${p.color} rounded-3xl p-6 text-white flex flex-col hover:opacity-90 transition-opacity`}>
+                  <p.icon size={32} className="mb-4" />
+                  <h3 className="font-display text-xl font-bold">{p.name}</h3>
+                  <p className="font-accent text-white/70 text-sm mt-1">{p.handle}</p>
+                  <div className="mt-4 pt-4 border-t border-white/20">
+                    <span className="font-display text-2xl font-bold">{p.followers}</span>
+                    <span className="font-accent text-white/60 text-xs ml-2 uppercase tracking-wider">Followers</span>
+                  </div>
+                </a>
               </motion.div>
             ))}
           </motion.div>

@@ -14,7 +14,6 @@ export default function NotFound() {
         animate="visible"
         className="text-center max-w-lg"
       >
-        {/* 404 number */}
         <motion.div
           variants={fadeInUp}
           className="font-display text-[8rem] md:text-[12rem] font-bold leading-none text-transparent bg-clip-text bg-gradient-to-br from-brand-rose to-brand-gold select-none"
@@ -43,10 +42,7 @@ export default function NotFound() {
           or you may have typed the wrong URL.
         </motion.p>
 
-        <motion.div
-          variants={fadeInUp}
-          className="flex flex-wrap gap-4 justify-center"
-        >
+        <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 justify-center">
           <Link href="/" className="btn-primary">
             <Home size={16} /> Back to Home
           </Link>

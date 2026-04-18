@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import emailjs from "@emailjs/browser";
 import { staggerContainer, fadeInUp, fadeInLeft, fadeInRight } from "@/lib/animations";
 import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
-import { FaInstagram, FaLinkedin, FaYoutube, FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const schema = z.object({
   name:    z.string().min(2, "Name is required"),
@@ -21,11 +21,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const socials = [
-  { icon: FaInstagram, label: "Instagram", href: "#", color: "hover:text-pink-500" },
-  { icon: FaLinkedin,  label: "LinkedIn",  href: "#", color: "hover:text-blue-500" },
-  { icon: FaYoutube,   label: "YouTube",   href: "#", color: "hover:text-red-500"  },
-  { icon: FaTwitter,   label: "Twitter/X", href: "#", color: "hover:text-sky-500"  },
-  { icon: FaFacebook,  label: "Facebook",  href: "#", color: "hover:text-blue-600" },
+  { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/firequeen_17?igsh=MTV2dzl0dTQ0OTNqbw==", color: "hover:text-pink-500" },
+  { icon: FaLinkedin,  label: "LinkedIn",  href: "https://www.linkedin.com/in/rekha-sahoo-35ab65240",                 color: "hover:text-blue-500" },
 ];
 
 export default function ContactContent() {

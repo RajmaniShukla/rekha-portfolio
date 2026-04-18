@@ -1,13 +1,10 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { FaInstagram, FaLinkedin, FaYoutube, FaTwitter, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const socialLinks = [
-  { icon: FaInstagram, href: "#", label: "Instagram", color: "hover:text-pink-400" },
-  { icon: FaLinkedin,  href: "#", label: "LinkedIn",  color: "hover:text-blue-400" },
-  { icon: FaYoutube,   href: "#", label: "YouTube",   color: "hover:text-red-400"  },
-  { icon: FaTwitter,   href: "#", label: "Twitter",   color: "hover:text-sky-400"  },
-  { icon: FaFacebook,  href: "#", label: "Facebook",  color: "hover:text-blue-500" },
+  { icon: FaInstagram, href: "https://www.instagram.com/firequeen_17?igsh=MTV2dzl0dTQ0OTNqbw==", label: "Instagram", color: "hover:text-pink-400" },
+  { icon: FaLinkedin,  href: "https://www.linkedin.com/in/rekha-sahoo-35ab65240",                 label: "LinkedIn",  color: "hover:text-blue-400" },
 ];
 
 const footerLinks = [

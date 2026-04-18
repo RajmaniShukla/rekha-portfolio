@@ -62,8 +62,10 @@ export async function getSocialLinks() {
 export async function getSiteSettings() {
   return sanityClient.fetch(`
     *[_type == "siteSettings"][0] {
-      tagline, email, phone, location, resumeFile, metaDescription,
-      instagramHandle, linkedinUrl, youtubeUrl, twitterUrl, facebookUrl
+      tagline, heroHeading, heroSubheading, aboutText,
+      email, phone, location, resumeFile, metaDescription,
+      heroPhoto { asset { _ref } },
+      ogImage { asset { _ref } }
     }
   `);
 }

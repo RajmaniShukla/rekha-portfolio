@@ -3,24 +3,27 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { staggerContainer, fadeInUp, scaleIn } from "@/lib/animations";
-import Image from "next/image";
+import { urlFor } from "@/lib/sanity/client";
 
 const categories = ["All", "Headshots", "Events", "Speaking", "Lifestyle"];
 
-const galleryItems = Array.from({ length: 12 }, (_, i) => ({
-  id: i + 1,
-  src: `https://placehold.co/600x${400 + (i % 3) * 100}/C9184A/FFF5F7?text=Photo+${i + 1}`,
-  caption: `Photo ${i + 1}`,
-  category: categories[1 + (i % 4)],
-  width: 600,
-  height: 400 + (i % 3) * 100,
-}));
+type GalleryItem = {
+  _id: string;
+  image: { asset: { _ref: string } };
+  caption?: string;
+  category?: string;
+};
 
-export default function GalleryContent() {
+type Props = { items: GalleryItem[] };
+
+export default function GalleryContent({ items }: Props) {
   const [active, setActive] = useState("All");
-  const [lightbox, setLightbox] = useState<null | typeof galleryItems[0]>(null);
+  const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
 
-  const filtered = active === "All" ? galleryItems : galleryItems.filter((g) => g.category === active);
+  const filtered = active === "All" ? items : items.filter((g) => g.category === active);
+
+  const imgUrl = (item: GalleryItem, width = 600) =>
+    urlFor(item.image).width(width).auto("format").url();
 
   return (
     <main className="pt-20">
@@ -63,36 +66,44 @@ export default function GalleryContent() {
       {/* Masonry Grid */}
       <section className="section-padding bg-brand-blush">
         <div className="container-wide">
-          <motion.div
-            variants={staggerContainer} initial="hidden" animate="visible"
-            className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4"
-          >
-            <AnimatePresence>
-              {filtered.map((item) => (
-                <motion.div
-                  key={item.id}
-                  variants={scaleIn} layout
-                  className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-2xl"
-                  onClick={() => setLightbox(item)}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={item.src}
-                    alt={item.caption}
-                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/40 transition-all duration-300 flex items-end p-4">
-                    <span className="text-white font-accent text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                      {item.caption}
-                    </span>
-                  </div>
-                  <span className="absolute top-3 right-3 bg-brand-rose text-white font-accent text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    {item.category}
-                  </span>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          {filtered.length === 0 ? (
+            <div className="text-center py-24 text-brand-navy/40 font-accent">
+              No photos yet — add some in the Studio!
+            </div>
+          ) : (
+            <motion.div
+              variants={staggerContainer} initial="hidden" animate="visible"
+              className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4"
+            >
+              <AnimatePresence>
+                {filtered.map((item) => (
+                  <motion.div
+                    key={item._id}
+                    variants={scaleIn} layout
+                    className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-2xl"
+                    onClick={() => setLightbox(item)}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={imgUrl(item)}
+                      alt={item.caption || "Gallery photo"}
+                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/40 transition-all duration-300 flex items-end p-4">
+                      <span className="text-white font-accent text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                        {item.caption}
+                      </span>
+                    </div>
+                    {item.category && (
+                      <span className="absolute top-3 right-3 bg-brand-rose text-white font-accent text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        {item.category}
+                      </span>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -110,8 +121,14 @@ export default function GalleryContent() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={lightbox.src} alt={lightbox.caption} className="w-full rounded-2xl" />
-              <p className="text-white/60 text-center mt-4 font-accent">{lightbox.caption}</p>
+              <img
+                src={imgUrl(lightbox, 1200)}
+                alt={lightbox.caption || "Gallery photo"}
+                className="w-full rounded-2xl"
+              />
+              {lightbox.caption && (
+                <p className="text-white/60 text-center mt-4 font-accent">{lightbox.caption}</p>
+              )}
             </motion.div>
             <button
               className="absolute top-6 right-6 text-white/60 hover:text-white font-display text-3xl"

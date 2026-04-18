@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import GalleryContent from "./GalleryContent";
+import { getGalleryItems } from "@/lib/sanity/queries";
+
+export const revalidate = 60; // revalidate every 60s
 
 export const metadata: Metadata = {
   title: "Gallery | Jyothi Rekha Sahoo",
@@ -11,6 +14,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GalleryPage() {
-  return <GalleryContent />;
+export default async function GalleryPage() {
+  const items = await getGalleryItems();
+  return <GalleryContent items={items} />;
 }
