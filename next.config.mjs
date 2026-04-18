@@ -17,6 +17,11 @@ const nextConfig = {
         source: "/studio/",
         destination: "/studio/index.html",
       },
+      // Proxy /static/* to /studio/static/* (studio asset paths)
+      {
+        source: "/static/:path*",
+        destination: "/studio/static/:path*",
+      },
     ];
   },
 };

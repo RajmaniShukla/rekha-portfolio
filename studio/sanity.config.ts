@@ -8,6 +8,7 @@ export default defineConfig({
   title:     "Rekha Portfolio CMS",
   projectId: "169nh9mf",
   dataset:   "production",
+  basePath:  "/studio",
   plugins:   [structureTool(), visionTool()],
   schema:    { types: schemaTypes },
 });
