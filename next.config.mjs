@@ -6,6 +6,19 @@ const nextConfig = {
       { protocol: "https", hostname: "placehold.co" },
     ],
   },
+  async rewrites() {
+    return [
+      // Serve studio index.html for /studio and /studio/
+      {
+        source: "/studio",
+        destination: "/studio/index.html",
+      },
+      {
+        source: "/studio/",
+        destination: "/studio/index.html",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
