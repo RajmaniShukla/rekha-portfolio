@@ -1,8 +1,12 @@
 .next/
 node_modules/
+studio/node_modules/
 .env.local
 .env*.local
 out/
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# Studio build output is committed so Vercel can serve it
+# studio/node_modules ignored but public/studio kept

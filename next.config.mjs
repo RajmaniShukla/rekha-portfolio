@@ -6,20 +6,6 @@ const nextConfig = {
       { protocol: "https", hostname: "placehold.co" },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/studio",
-        destination: "https://rekha-portfolio.sanity.studio",
-        permanent: false,
-      },
-      {
-        source: "/studio/:path*",
-        destination: "https://rekha-portfolio.sanity.studio/:path*",
-        permanent: false,
-      },
-    ];
-  },
 };
 
 export default nextConfig;
