@@ -5,6 +5,7 @@ import { galleryItem }  from "./galleryItem";
 import { testimonial }  from "./testimonial";
 import { socialLink }   from "./socialLink";
 import { siteSettings } from "./siteSettings";
+import { post }         from "./post";
 
 export const schemaTypes = [
   experience,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   testimonial,
   socialLink,
   siteSettings,
+  post,
 ];

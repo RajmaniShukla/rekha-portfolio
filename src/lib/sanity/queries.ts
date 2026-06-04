@@ -70,6 +70,41 @@ export async function getSiteSettings() {
   `);
 }
 
+// Blog Posts
+export async function getPosts(category?: string) {
+  const filter = category && category !== "all"
+    ? `&& category == "${category}"`
+    : "";
+  return sanityClient.fetch(`
+    *[_type == "post" ${filter}] | order(featured desc, publishedAt desc) {
+      _id, title, slug, publishedAt, excerpt, category, readTime, featured,
+      coverImage { asset { _ref } }
+    }
+  `);
+}
+
+export async function getPostBySlug(slug: string) {
+  return sanityClient.fetch(`
+    *[_type == "post" && slug.current == $slug][0] {
+      _id, title, slug, publishedAt, excerpt, category, readTime, featured,
+      coverImage { asset { _ref } },
+      body[] {
+        ...,
+        _type == "image" => { ..., asset { _ref } }
+      }
+    }
+  `, { slug });
+}
+
+export async function getRelatedPosts(category: string, excludeId: string) {
+  return sanityClient.fetch(`
+    *[_type == "post" && category == $category && _id != $excludeId] | order(publishedAt desc)[0...3] {
+      _id, title, slug, publishedAt, excerpt, category, readTime,
+      coverImage { asset { _ref } }
+    }
+  `, { category, excludeId });
+}
+
 // Featured / Bestseller items for home
 export async function getFeaturedExperiences() {
   return sanityClient.fetch(`
